@@ -27,10 +27,12 @@ class CompletedChannel:
 
     def __init__(self):
         self.sent = []
-        self.chunks = [b"Filesystem hash complete. Hashed 0 files.\n"]
+        self.chunks = []
 
     def send(self, value):
         self.sent.append(value)
+        if value == "diagnose sys filesystem hash\n":
+            self.chunks.append(b"Filesystem hash complete. Hashed 0 files.\n")
 
     def recv_ready(self):
         return bool(self.chunks)
@@ -85,6 +87,7 @@ def test_collector_requests_wide_pty(monkeypatch):
     assert client.width == fhc.PTY_WIDTH
     assert client.width > 240
     assert client.height == fhc.PTY_HEIGHT
+    assert client.channel.sent == ["diagnose sys filesystem hash\n"]
 
 
 def test_pinned_policy_accepts_exact_unknown_key():
