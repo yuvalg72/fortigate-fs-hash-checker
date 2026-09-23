@@ -1,5 +1,8 @@
 # The FortiGate filesystem hash checker
 
+> [!WARNING]
+> **Fork hardening status:** this fork is not production-ready yet. Security and integrity hardening is tracked in [HARDENING_PLAN.md](HARDENING_PLAN.md). Review [SECURITY.md](SECURITY.md) before testing against real FortiGate devices. In particular, the current upstream-derived implementation still contains credential-handling, SSH trust, collection-completeness, parsing, and evidence-integrity gaps that must be closed before production use.
+
 - [The FortiGate filesystem hash checker](#the-fortigate-filesystem-hash-checker)
   - [Introduction](#introduction)
   - [Requirements](#requirements)
