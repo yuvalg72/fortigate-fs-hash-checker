@@ -52,6 +52,22 @@ def make_pinned_policy(paramiko_module: Any, expected_pin: str) -> Any:
     return PinnedFingerprintPolicy()
 
 
+def verify_connected_host_key_pin(ssh_client: Any, expected_pin: str, hostname: str) -> None:
+    expected = normalize_pin(expected_pin)
+    transport = ssh_client.get_transport()
+    if transport is None or not transport.is_active():
+        raise CollectionError(
+            f"Unable to verify the SSH host-key fingerprint for {hostname}; transport is not active."
+        )
+    remote_key = transport.get_remote_server_key()
+    actual = host_key_sha256(remote_key.asbytes())
+    if actual != expected:
+        raise CollectionError(
+            f"SSH host-key fingerprint mismatch for {hostname}; "
+            f"expected {expected}, got {actual}."
+        )
+
+
 def read_until_completion(channel: Any, collection_timeout: float, idle_timeout: float) -> str:
     if collection_timeout <= 0 or idle_timeout <= 0:
         raise InputValidationError("Collection and idle timeouts must be positive values.")
@@ -159,6 +175,9 @@ def collect_raw_hashes(
             auth_timeout=connect_timeout,
             banner_timeout=connect_timeout,
         )
+        if host_key_sha256_pin:
+            verify_connected_host_key_pin(ssh, host_key_sha256_pin, fortigate)
+
         channel = ssh.invoke_shell(term="vt100", width=PTY_WIDTH, height=PTY_HEIGHT)
         _drain_ready(channel)
         channel.send("diagnose sys filesystem hash\n")
