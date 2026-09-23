@@ -2,8 +2,9 @@ from pathlib import Path
 
 import pytest
 
+import fs_hash_checker.cli as cli
 from fs_hash_checker.cli import build_parser, main
-from fs_hash_checker.models import EXIT_VALIDATION_FAILED
+from fs_hash_checker.models import EXIT_OK, EXIT_VALIDATION_FAILED
 
 H = "a" * 64
 
@@ -17,12 +18,48 @@ def raw(hostname="FGT"):
     )
 
 
+def empty_raw(hostname="FGT"):
+    return (
+        f"{hostname} # diagnose sys filesystem hash\n"
+        "Filesystem hash complete. Hashed 0 files.\n"
+    )
+
+
 def test_password_argument_does_not_exist():
     parser = build_parser()
     assert "--password" not in parser.format_help()
     with pytest.raises(SystemExit) as exc:
         parser.parse_args(["--password", "secret"])
     assert exc.value.code == 2
+
+
+def test_prompted_password_is_never_emitted(monkeypatch, capsys):
+    secret = "test-only-super-secret"
+    received = {}
+
+    monkeypatch.setattr(cli.getpass, "getpass", lambda _prompt: secret)
+
+    def fake_collect(*_args, **kwargs):
+        received["password"] = kwargs.get("password")
+        return empty_raw()
+
+    monkeypatch.setattr(cli, "collect_raw_hashes", fake_collect)
+
+    code = cli.main(
+        [
+            "--fortigate",
+            "192.0.2.10",
+            "--username",
+            "hash-auditor",
+            "--prompt-password",
+        ]
+    )
+    captured = capsys.readouterr()
+
+    assert code == EXIT_OK
+    assert received["password"] == secret
+    assert secret not in captured.out
+    assert secret not in captured.err
 
 
 def test_mixed_csv_batch_isolates_invalid_row_and_reports_summary(tmp_path: Path, capsys):
