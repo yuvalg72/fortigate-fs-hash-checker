@@ -1,0 +1,51 @@
+name: Bug report
+description: Report incorrect or unexpected behavior without including secrets or customer data.
+title: "[BUG] "
+labels:
+  - "type:bug"
+  - "status:ready"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include credentials, production configs, customer-identifying evidence, or sensitive vulnerability details.
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction / sanitized evidence
+      description: Provide minimal sanitized steps or fixtures.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Tool version / commit
+      placeholder: Commit SHA or version
+    validations:
+      required: true
+  - type: input
+    id: fortios
+    attributes:
+      label: FortiOS version/build
+      placeholder: e.g. 7.4.x build xxxx, if relevant
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: Explain integrity, security, or operational impact.
+    validations:
+      required: true

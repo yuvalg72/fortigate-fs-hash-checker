@@ -1,0 +1,42 @@
+name: Hardening proposal
+description: Propose a security, integrity, evidence, or governance improvement.
+title: "[HARDENING] "
+labels:
+  - "type:hardening"
+  - "status:ready"
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: What trust boundary, failure mode, or operational weakness is being addressed?
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Risk
+      description: What can go wrong if this is not addressed?
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: Required change
+      description: Describe the control or behavior required.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Define objective closure conditions, including negative-path behavior where relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation evidence
+      description: What tests or evidence must exist before closure?
+    validations:
+      required: true
