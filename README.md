@@ -229,6 +229,8 @@ This repository is a security-hardening fork of Kevin Guenay's `fortigate-fs-has
 
 Upstream project: https://github.com/KevinGuenay/fortigate-fs-hash-checker
 
+Sync model: this is an intentionally diverged security-hardening fork. Immediately before this documentation change, GitHub reported the fork as **2 commits ahead / 0 commits behind** upstream `main`; upstream changes are not assumed to be synchronized automatically.
+
 Original project information: https://blog.guenay.at/2026/02/08/introducing-the-fortigate-filesystem-hash-checker/
 
 Fortinet background guidance: https://community.fortinet.com/t5/FortiGate/Technical-Tip-Best-practice-Periodically-do-FortiGate-files/ta-p/322502
