@@ -1,3 +1,15 @@
+## Fork provenance
+
+This repository is a security-hardened fork of [KevinGuenay/fortigate-fs-hash-checker](https://github.com/KevinGuenay/fortigate-fs-hash-checker). Original authorship of the inherited project belongs to the upstream project and its contributors.
+
+- **Local purpose:** Harden FortiGate filesystem-hash collection and comparison for fail-closed evidence handling and safer operational use.
+- **Local changes:** The verified direct-parent comparison on 05/10/2026 was **3 commits ahead / 0 behind**. Local work restructures the original script into modules, adds strict parser/completeness validation, SSH host-key controls, secure credential handling, tests, CI/CodeQL/Dependabot, hardening documentation, contribution/security controls, and repository hygiene.
+- **Sync model:** Intentionally diverged security-hardening fork. Upstream changes require explicit review and are not assumed to be synchronized automatically.
+- **License and attribution:** GitHub currently reports no detected SPDX license and this fork has no standalone `LICENSE` file. This notice does not grant additional reuse rights; upstream licensing/permission must be verified before redistribution.
+- **Links and project claims:** Security-hardening and validation claims below describe this fork's local implementation. Inherited code remains attributable to the upstream project.
+
+---
+
 # FortiGate Filesystem Hash Checker
 
 > [!WARNING]
